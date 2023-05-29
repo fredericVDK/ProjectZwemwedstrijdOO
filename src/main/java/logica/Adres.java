@@ -8,6 +8,8 @@ public class Adres {
     private String gemeente;
     private int postcode;
 
+    private int id;
+
     public Adres(String straat, String huisnummer, String gemeente, int postcode) {
         if (straat.equals("")) throw new IllegalArgumentException("Gelieve een straat in te vullen");
         if (huisnummer.equals("")) throw new IllegalArgumentException("Gelieve een Nummer in te vullen");
@@ -17,7 +19,21 @@ public class Adres {
         this.huisnummer = huisnummer;
         this.gemeente = gemeente;
         this.postcode = postcode;
+
     }
+
+    public Adres(String straat, String huisnummer, String gemeente, int postcode,int id) {
+        if (straat.equals("")) throw new IllegalArgumentException("Gelieve een straat in te vullen");
+        if (huisnummer.equals("")) throw new IllegalArgumentException("Gelieve een Nummer in te vullen");
+        if (gemeente.equals("")) throw new IllegalArgumentException("Gelieve een Gemeente in te vullen");
+        if (postcode == 0) throw new IllegalArgumentException("Gelieve een postcode in te vullen");
+        this.straat = straat;
+        this.huisnummer = huisnummer;
+        this.gemeente = gemeente;
+        this.postcode = postcode;
+        this.id = id;
+    }
+
 
     public String getStraat() {
         return straat;

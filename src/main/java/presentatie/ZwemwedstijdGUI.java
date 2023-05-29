@@ -33,14 +33,13 @@ public class ZwemwedstijdGUI {
             public void actionPerformed(ActionEvent e) {
                 Aantal_banen aantal = Aantal_banen.valueOf(comboBoxAantalBanen.getSelectedItem().toString().replaceFirst("","_"));
                 Lengte lengte = Lengte.valueOf(comboBoxLengte.getSelectedItem().toString().replaceFirst("","_"));
+                Adres adres = new Adres(textFieldStraat.getText(),textFieldNummer.getText(),textFieldGemeente.getText(),Integer.parseInt(textFieldPostcode.getText()));
                 try{
-                    ZwembadAanmaken(textFieldNaam.getText(),new Adres(textFieldStraat.getText(),textFieldNummer.getText(),textFieldGemeente.getText(),Integer.parseInt(textFieldPostcode.getText())),aantal,lengte);
+                    ZwembadAanmaken(textFieldNaam.getText(),adres,aantal,lengte);
                     labelZwembadToevogen.setText("Zwembad toegevoegd");
                 }catch (Exception exception){
                     labelZwembadToevogen.setText(exception.getMessage());
                 }
-
-
 
             }
         });

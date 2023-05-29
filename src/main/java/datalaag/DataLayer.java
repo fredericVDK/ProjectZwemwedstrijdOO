@@ -13,13 +13,8 @@ public class DataLayer {
     private final String pass = "Maximus2045";
     private Connection con;
 
-    public DataLayer(String dbName, boolean alternative) {
-        this.dbName = dbName;
-        if (alternative) {
-            makeConnectionAlternative();
-        } else {
-            makeConnection();
-        }
+    public DataLayer() {
+        makeConnection();
     }
 
     private void makeConnection() {
@@ -32,15 +27,5 @@ public class DataLayer {
         }
     }
 
-    private void makeConnectionAlternative() {
-        try {
-            Properties connectionProps = new Properties();
-            connectionProps.setProperty("user", this.login);
-            connectionProps.setProperty("password", this.pass);
-            this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/"
-                    + dbName + "?serverTimezone=UTC&allowMultiQueries=true", connectionProps);
-        } catch (SQLException ex) {
-            Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+
 }
