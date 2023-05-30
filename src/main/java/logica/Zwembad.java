@@ -1,8 +1,11 @@
 package logica;
 
 
+import java.util.Objects;
 
 public class Zwembad {
+    private int id;
+    private int adresId;
     private String naam;
     private Adres adres;
     private Aantal_banen aantalBanen;
@@ -15,6 +18,30 @@ public class Zwembad {
         this.adres = adres;
         this.aantalBanen = aantalBanen;
         this.lengte = lengte;
+    }
+
+    public Zwembad(int id, int adresId, String naam, Aantal_banen aantalBanen, Lengte lengte) {
+        this.id = id;
+        this.adresId = adresId;
+        this.naam = naam;
+        this.aantalBanen = aantalBanen;
+        this.lengte = lengte;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getAdresId() {
+        return adresId;
+    }
+
+    public void setAdresId(int adresId) {
+        this.adresId = adresId;
     }
 
     public String getNaam() {
@@ -47,5 +74,13 @@ public class Zwembad {
 
     public void setLengte(Lengte lengte) {
         this.lengte = lengte;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Zwembad zwembad = (Zwembad) o;
+        return id == zwembad.id && adresId == zwembad.adresId && Objects.equals(naam, zwembad.naam) && Objects.equals(adres, zwembad.adres) && aantalBanen == zwembad.aantalBanen && lengte == zwembad.lengte;
     }
 }
