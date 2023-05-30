@@ -66,9 +66,6 @@ public class ZwemwedstijdGUI {
         Zwembad zwembad = new Zwembad(naam,adres,aantalBanen,lengte);
         return zwembad;
     }
-    public void Adres(String straat, String huisnummer, String gemeente, int postcode){
-        Adres adres = new Adres(straat,huisnummer,gemeente,postcode);
-    }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("ZwemwedstijdGUI");

@@ -1,10 +1,12 @@
 package presentatie;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFormGUI {
     private JButton zwembadToevoegenButton;
-    private JButton button2;
+    private JButton wedstrijdToevoegenButton;
     private JButton button3;
     private JButton button4;
     private JButton button5;
@@ -21,6 +23,14 @@ public class MainFormGUI {
             frame.pack();
             frame.setVisible(true);
 
+            surroundingFrame.dispose();
+        });
+        wedstrijdToevoegenButton.addActionListener(e -> {
+            JFrame frame = new JFrame("WedstrijdGUI");
+            frame.setContentPane(new WedstrijdGUI(frame).mainPanelWedstrijd);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setVisible(true);
             surroundingFrame.dispose();
         });
     }

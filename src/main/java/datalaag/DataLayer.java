@@ -1,9 +1,6 @@
 package datalaag;
 
-import logica.Aantal_banen;
-import logica.Adres;
-import logica.Lengte;
-import logica.Zwembad;
+import logica.*;
 
 import java.sql.*;
 import java.util.Properties;
@@ -108,5 +105,36 @@ public class DataLayer {
         }
         return true;
     }
+    public boolean zwembadIdChecker(int zwembadId) throws SQLException {
+        Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+        ResultSet rs = stmt.executeQuery("SELECT id FROM zwembaden");
 
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            if (zwembadId == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+//    public void wedstrijdToevoegen(Wedstrijd wedstrijd) throws SQLException {
+//        PreparedStatement stmt = null;
+//
+//            try {
+//                stmt = this.con.prepareStatement("INSERT INTO wedstrijden (zwembad_id,naam,datum,tijdsregistratie,dagdeel) VALUES (?,?,?,?,?)");
+//                stmt.setInt(1, adresId);
+//                stmt.setString(2, zwembad.getNaam());
+//                stmt.setString(3, zwembad.getLengte().toString().replace("_", ""));
+//                stmt.setString(4, zwembad.getAantalBanen().toString().replace("_", ""));
+//                stmt.executeUpdate();
+//
+//            } catch (SQLException ex) {
+//                Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
+//            } finally {
+//                if (stmt != null) {
+//                    stmt.close();
+//                }
+//            }
+//    }
 }
