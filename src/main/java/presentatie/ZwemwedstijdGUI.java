@@ -1,10 +1,12 @@
 package presentatie;
 
+import datalaag.DataLayer;
 import logica.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class ZwemwedstijdGUI {
     private JTextField textFieldNaam;
@@ -31,12 +33,18 @@ public class ZwemwedstijdGUI {
         toevoegenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 Aantal_banen aantal = Aantal_banen.valueOf(comboBoxAantalBanen.getSelectedItem().toString().replaceFirst("","_"));
                 Lengte lengte = Lengte.valueOf(comboBoxLengte.getSelectedItem().toString().replaceFirst("","_"));
-                Adres adres = new Adres(textFieldStraat.getText(),textFieldNummer.getText(),textFieldGemeente.getText(),Integer.parseInt(textFieldPostcode.getText()));
                 try{
-                    ZwembadAanmaken(textFieldNaam.getText(),adres,aantal,lengte);
-                    labelZwembadToevogen.setText("Zwembad toegevoegd");
+                     Adres adres = new Adres(textFieldStraat.getText(),textFieldNummer.getText(),textFieldGemeente.getText(),Integer.parseInt(textFieldPostcode.getText()));
+                     Zwembad zwembad = ZwembadAanmaken(textFieldNaam.getText(),adres,aantal,lengte);
+                     DataLayer datalaag = new DataLayer();
+
+                     datalaag.adresToevoegen(adres);
+                     datalaag.zwembadToevoegen(zwembad,datalaag.adresChecker(adres));
+
+                     labelZwembadToevogen.setText("Zwembad toegevoegd");
                 }catch (Exception exception){
                     labelZwembadToevogen.setText(exception.getMessage());
                 }
@@ -54,8 +62,9 @@ public class ZwemwedstijdGUI {
     }
 
 
-    public void ZwembadAanmaken(String naam, Adres adres , Aantal_banen aantalBanen, Lengte lengte ){
+    public Zwembad ZwembadAanmaken(String naam, Adres adres , Aantal_banen aantalBanen, Lengte lengte ){
         Zwembad zwembad = new Zwembad(naam,adres,aantalBanen,lengte);
+        return zwembad;
     }
     public void Adres(String straat, String huisnummer, String gemeente, int postcode){
         Adres adres = new Adres(straat,huisnummer,gemeente,postcode);

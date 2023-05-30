@@ -1,6 +1,7 @@
 package logica;
 
 
+import java.util.Objects;
 
 public class Adres {
     private String straat;
@@ -43,6 +44,14 @@ public class Adres {
         this.straat = straat;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getHuisnummer() {
         return huisnummer;
     }
@@ -66,4 +75,13 @@ public class Adres {
     public void setPostcode(int postcode) {
         this.postcode = postcode;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Adres adres = (Adres) o;
+        return postcode == adres.postcode && Objects.equals(straat, adres.straat) && Objects.equals(huisnummer, adres.huisnummer) && Objects.equals(gemeente, adres.gemeente);
+    }
+
 }
