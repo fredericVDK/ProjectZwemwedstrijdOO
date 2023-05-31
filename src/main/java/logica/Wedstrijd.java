@@ -19,6 +19,8 @@ public class Wedstrijd {
     }
 
     public Wedstrijd(int zwembad_id, String naam, Tijdsregistratie tijdsregistratie, Dagdeel dagdeel, Date datum) {
+        if (naam.equals("")) throw new IllegalArgumentException("Gelieve een naam in te vullen");
+        if (datum.equals("")) throw new IllegalArgumentException("Gelieve een geldige datum in te vullen");
         this.zwembad_id = zwembad_id;
         this.naam = naam;
         this.tijdsregistratie = tijdsregistratie;
@@ -56,5 +58,13 @@ public class Wedstrijd {
 
     public void setDatum(Date datum) {
         this.datum = datum;
+    }
+
+    public int getZwembad_id() {
+        return zwembad_id;
+    }
+
+    public void setZwembad_id(int zwembad_id) {
+        this.zwembad_id = zwembad_id;
     }
 }

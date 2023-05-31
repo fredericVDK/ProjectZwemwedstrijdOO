@@ -105,36 +105,37 @@ public class DataLayer {
         }
         return true;
     }
-    public boolean zwembadIdChecker(int zwembadId) throws SQLException {
+    public int zwembadIdChecker(int zwembadId) throws SQLException {
         Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-        ResultSet rs = stmt.executeQuery("SELECT id FROM zwembaden");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM zwembaden");
 
         while (rs.next()) {
             int id = rs.getInt("id");
             if (zwembadId == id) {
-                return true;
+                return zwembadId;
             }
         }
-        return false;
+        return -1;
     }
 
-//    public void wedstrijdToevoegen(Wedstrijd wedstrijd) throws SQLException {
-//        PreparedStatement stmt = null;
-//
-//            try {
-//                stmt = this.con.prepareStatement("INSERT INTO wedstrijden (zwembad_id,naam,datum,tijdsregistratie,dagdeel) VALUES (?,?,?,?,?)");
-//                stmt.setInt(1, adresId);
-//                stmt.setString(2, zwembad.getNaam());
-//                stmt.setString(3, zwembad.getLengte().toString().replace("_", ""));
-//                stmt.setString(4, zwembad.getAantalBanen().toString().replace("_", ""));
-//                stmt.executeUpdate();
-//
-//            } catch (SQLException ex) {
-//                Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
-//            } finally {
-//                if (stmt != null) {
-//                    stmt.close();
-//                }
-//            }
-//    }
+    public void wedstrijdToevoegen(Wedstrijd wedstrijd) throws SQLException {
+        PreparedStatement stmt = null;
+
+            try {
+                stmt = this.con.prepareStatement("INSERT INTO wedstrijden (zwembad_id,naam,datum,tijdsregistratie,dagdeel) VALUES (?,?,?,?,?)");
+                stmt.setInt(1, wedstrijd.getZwembad_id());
+                stmt.setString(2, wedstrijd.getNaam());
+                stmt.setString(3, wedstrijd.getDatum().toString());
+                stmt.setString(4, wedstrijd.getTijdsregistratie().toString());
+                stmt.setString(5, wedstrijd.getDagdeel().toString());
+                stmt.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            }
+    }
 }

@@ -44,8 +44,10 @@ public class WedstrijdGUI {
             public void actionPerformed(ActionEvent e) {
                 DataLayer datalaag  = new DataLayer();
                 try {
-                    Wedstrijd wedstrijd = new Wedstrijd(textFieldNaam.getText(), Tijdsregistratie.valueOf(comboBoxTijdsregistratie.getSelectedItem().toString()), Dagdeel.valueOf(comboBoxDagdeel.getSelectedItem().toString()), Date.valueOf(textFieldDatum.getText().toString()));
-                    lblErrorMessage.setText("OK");
+                    Wedstrijd wedstrijd = new Wedstrijd(datalaag.zwembadIdChecker(Integer.parseInt(textFieldZwembadId.getText())),textFieldNaam.getText(), Tijdsregistratie.valueOf(comboBoxTijdsregistratie.getSelectedItem().toString()),
+                            Dagdeel.valueOf(comboBoxDagdeel.getSelectedItem().toString()), Date.valueOf(textFieldDatum.getText().toString()));
+                    lblErrorMessage.setText("Wedstrijd toegevoegd");
+                    datalaag.wedstrijdToevoegen(wedstrijd);
                 }catch (Exception ex){
                     lblErrorMessage.setText(ex.getMessage());
                 }
