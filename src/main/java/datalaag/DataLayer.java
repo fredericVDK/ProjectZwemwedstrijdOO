@@ -294,23 +294,61 @@ public class DataLayer {
     }
     public void wedstijdprogrammaAanmaken(WedstrijdProgramma wedstrijdProgramma) throws SQLException {
         PreparedStatement stmt = null;
+            if (wedstijdChecker(wedstrijdProgramma)) {
+                if (programmaChecker(wedstrijdProgramma)) {
+                    if (programmanummerChecker(wedstrijdProgramma)) {
+                        try {
+                            stmt = this.con.prepareStatement("INSERT INTO wedstrijdprogrammas (id,wedstrijd_id,programma_id,programmanummer,leeftijdscategorie,aanvangsuur) VALUES (?,?,?,?,?,?)");
+                            stmt.setInt(1, aantalWedstijdprogrammas() + 1);
+                            stmt.setInt(2, wedstrijdProgramma.getWedstijdId());
+                            stmt.setInt(3, wedstrijdProgramma.getProgrammaId());
+                            stmt.setInt(4, wedstrijdProgramma.getProgrammanummer());
+                            stmt.setString(5, wedstrijdProgramma.getLeeftijdscategorie().toString());
+                            stmt.setTime(6, (Time) wedstrijdProgramma.getAanvangsuur());
+                            stmt.executeUpdate();
 
-            try {
-                stmt = this.con.prepareStatement("INSERT INTO wedstrijdprogrammas (wedstrijd_id,programma_id,programmanummer,leeftijdscategorie,aanvangsuur) VALUES (?,?,?,?,?)");
-                stmt.setInt(1, wedstrijdProgramma.getWedstijdId());
-                stmt.setInt(2, wedstrijdProgramma.getProgrammaId());
-                stmt.setInt(3, wedstrijdProgramma.getProgrammanummer());
-                stmt.setString(4, wedstrijdProgramma.getLeeftijdscategorie().toString());
-                stmt.setTime(5, (Time) wedstrijdProgramma.getAanvangsuur());
-                stmt.executeUpdate();
-
-            } catch (SQLException ex) {
-                Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                if (stmt != null) {
-                    stmt.close();
-                }
-            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
+                        } finally {
+                            if (stmt != null) {
+                                stmt.close();
+                            }
+                        }
+                    } else throw new IllegalArgumentException("Programmanummer wordt al gebruikt");
+                } else throw new IllegalArgumentException("Programma ID bestaat niet");
+            }else throw new IllegalArgumentException("Wedstrijd ID bestaat niet");
     }
-
+    public int aantalWedstijdprogrammas() throws SQLException {
+        Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+        ResultSet rs = stmt.executeQuery("Select COUNT(*) AS aantal FROM wedstrijdprogrammas");
+        int aantal = 0;
+        while (rs.next()) {
+            aantal = rs.getInt("aantal");
+        }
+        return aantal;
+    }
+    public boolean wedstijdChecker(WedstrijdProgramma wedstrijdProgramma) throws SQLException {
+        String query = "SELECT id FROM wedstrijden WHERE wedstrijden.id = ?";
+        try (PreparedStatement stmt = this.con.prepareStatement(query)) {
+            stmt.setInt(1, wedstrijdProgramma.getWedstijdId());
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        }
+    }
+    public boolean programmaChecker(WedstrijdProgramma wedstrijdProgramma) throws SQLException {
+        String query = "SELECT id FROM programmas WHERE programmas.id = ?";
+        try (PreparedStatement stmt = this.con.prepareStatement(query)) {
+            stmt.setInt(1, wedstrijdProgramma.getProgrammaId());
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        }
+    }
+    public boolean programmanummerChecker(WedstrijdProgramma wedstrijdProgramma) throws SQLException {
+        String query = "SELECT programmanummer FROM wedstrijdprogrammas WHERE programmanummer = ?";
+        try (PreparedStatement stmt = this.con.prepareStatement(query)) {
+            stmt.setInt(1, wedstrijdProgramma.getProgrammanummer());
+            ResultSet rs = stmt.executeQuery();
+            return !rs.next();
+        }
+    }
 }

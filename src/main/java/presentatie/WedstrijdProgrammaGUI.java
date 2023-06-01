@@ -45,6 +45,7 @@ public class WedstrijdProgrammaGUI {
         aanmakenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                lblErrorMessage.setText("");
                 DataLayer datalaag = new DataLayer();
                 int wedstijdId = Integer.parseInt(textFieldwedstijdId.getText());
                 int programmaId = Integer.parseInt(textFieldProgrammaId.getText());
@@ -55,8 +56,9 @@ public class WedstrijdProgrammaGUI {
                 WedstrijdProgramma wedProg = wedProgrammaAanmaken(wedstijdId,programmaId,programmaNr,geselecteerdeLeeftijd,aanvangsuur);
                 try {
                     datalaag.wedstijdprogrammaAanmaken(wedProg);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    lblErrorMessage.setText("Wedstrijdprogramma toegevoegd");
+                } catch (Exception ex) {
+                    lblErrorMessage.setText(ex.getMessage());
                 }
             }
         });
