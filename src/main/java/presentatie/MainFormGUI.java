@@ -8,7 +8,7 @@ public class MainFormGUI {
     private JButton zwembadToevoegenButton;
     private JButton wedstrijdToevoegenButton;
     private JButton jurySamenstellenButton;
-    private JButton button4;
+    private JButton wedstrijdProgrammaAanmakenButton;
     private JButton button5;
     private JButton button6;
     JPanel mainMainPanel;
@@ -44,6 +44,15 @@ public class MainFormGUI {
             frame.setVisible(true);
             surroundingFrame.dispose();
         });
+        wedstrijdProgrammaAanmakenButton.addActionListener(e -> {
+            JFrame frame = new JFrame("WedstrijdProgrammaGUI");
+            frame.setContentPane(new WedstrijdProgrammaGUI(frame).mainPanelWedstijdprogramma);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setSize(650,250);
+            frame.setVisible(true);
+            surroundingFrame.dispose();
+        });
     }
 
     public static void main(String[] args) {
@@ -54,5 +63,4 @@ public class MainFormGUI {
         frame.setSize(500,150);
         frame.setVisible(true);
     }
-
 }

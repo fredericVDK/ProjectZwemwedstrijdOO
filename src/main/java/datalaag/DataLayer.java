@@ -30,25 +30,26 @@ public class DataLayer {
 
     public void adresToevoegen(Adres adres) throws SQLException {
         PreparedStatement stmt = null;
-            if (adresChecker(adres) == -1) {
-                try {
-                    stmt = this.con.prepareStatement("INSERT INTO adressen (straat,huisnummer,gemeente,postcode) VALUES (?,?,?,?)");
-                    stmt.setString(1, adres.getStraat());
-                    stmt.setString(2, adres.getHuisnummer());
-                    stmt.setString(3, adres.getGemeente());
-                    stmt.setInt(4, adres.getPostcode());
-                    stmt.executeUpdate();
+        if (adresChecker(adres) == -1) {
+            try {
+                stmt = this.con.prepareStatement("INSERT INTO adressen (straat,huisnummer,gemeente,postcode) VALUES (?,?,?,?)");
+                stmt.setString(1, adres.getStraat());
+                stmt.setString(2, adres.getHuisnummer());
+                stmt.setString(3, adres.getGemeente());
+                stmt.setInt(4, adres.getPostcode());
+                stmt.executeUpdate();
 
-                } catch (SQLException ex) {
-                    Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    if (stmt != null) {
-                        stmt.close();
-                    }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (stmt != null) {
+                    stmt.close();
                 }
-            }else throw new IllegalArgumentException("adres bestaat al");
+            }
+        } else throw new IllegalArgumentException("adres bestaat al");
 
     }
+
     public int adresChecker(Adres adres) throws SQLException {
         Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = stmt.executeQuery("SELECT * FROM adressen");
@@ -59,14 +60,15 @@ public class DataLayer {
             String huisNummer = rs.getString("huisnummer");
             String gemeente = rs.getString("gemeente");
             int postcode = rs.getInt("postcode");
-            Adres adresId = new Adres(straat, huisNummer, gemeente, postcode,id);
+            Adres adresId = new Adres(straat, huisNummer, gemeente, postcode, id);
             if (adres.equals(adresId)) {
                 return adresId.getId();
             }
         }
         return -1;
     }
-    public void zwembadToevoegen(Zwembad zwembad ,int adresId) throws SQLException {
+
+    public void zwembadToevoegen(Zwembad zwembad, int adresId) throws SQLException {
         PreparedStatement stmt = null;
         if (zwembadChecker(zwembad)) {
             try {
@@ -84,8 +86,9 @@ public class DataLayer {
                     stmt.close();
                 }
             }
-        }else throw new IllegalArgumentException("Zwembad bestaat al");
+        } else throw new IllegalArgumentException("Zwembad bestaat al");
     }
+
     public boolean zwembadChecker(Zwembad zwembad) throws SQLException {
         Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = stmt.executeQuery("SELECT * FROM zwembaden");
@@ -94,9 +97,9 @@ public class DataLayer {
             int id = rs.getInt("id");
             int adresId = rs.getInt("adres_id");
             String naam = rs.getString("naam");
-            Lengte lengte = Lengte.valueOf(rs.getString("lengte").replaceFirst("","_"));
-            Aantal_banen aantalBanen = Aantal_banen.valueOf(rs.getString("aantal_banen").replaceFirst("","_"));
-            Zwembad zwembadcheck = new Zwembad(id,adresId,naam,aantalBanen,lengte);
+            Lengte lengte = Lengte.valueOf(rs.getString("lengte").replaceFirst("", "_"));
+            Aantal_banen aantalBanen = Aantal_banen.valueOf(rs.getString("aantal_banen").replaceFirst("", "_"));
+            Zwembad zwembadcheck = new Zwembad(id, adresId, naam, aantalBanen, lengte);
             if (zwembad.equals(zwembadcheck)) {
                 return false;
             }
@@ -120,46 +123,14 @@ public class DataLayer {
 
     public void wedstrijdToevoegen(Wedstrijd wedstrijd) throws SQLException {
         PreparedStatement stmt = null;
-            if (wedstrijd.getZwembad_id() > 0) {
-                try {
-                    stmt = this.con.prepareStatement("INSERT INTO wedstrijden (zwembad_id,naam,datum,tijdsregistratie,dagdeel) VALUES (?,?,?,?,?)");
-                    stmt.setInt(1, wedstrijd.getZwembad_id());
-                    stmt.setString(2, wedstrijd.getNaam());
-                    stmt.setString(3, wedstrijd.getDatum().toString());
-                    stmt.setString(4, wedstrijd.getTijdsregistratie().toString());
-                    stmt.setString(5, wedstrijd.getDagdeel().toString());
-                    stmt.executeUpdate();
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    if (stmt != null) {
-                        stmt.close();
-                    }
-                }
-            }else throw new IllegalArgumentException("Zwembad bestaad niet");
-    }
-
-    public ArrayList<Offiacial> offiacialLijst(int wedstrijd_id) throws SQLException {
-        ArrayList<Offiacial> offiacials = new ArrayList<>();
-        Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-        ResultSet rs = stmt.executeQuery("SELECT official_id,functie from jury\n" +
-                "WHERE wedstrijd_id = " + wedstrijd_id + " order by official_id");
-
-        while (rs.next()) {
-            int officialId = rs.getInt("official_id");
-            String functie = rs.getString("functie");
-            Offiacial offiacial = new Offiacial(officialId,Functie.valueOf(functie));
-            offiacials.add(offiacial);
-        }
-        return offiacials;
-    }
-    public void juryVerwijderen(int wedstrijd_id,int official_id) throws SQLException {
-        PreparedStatement stmt = null;
+        if (wedstrijd.getZwembad_id() > 0) {
             try {
-                stmt = this.con.prepareStatement("DELETE FROM jury WHERE wedstrijd_id=? AND official_id=?");
-                stmt.setInt(1, wedstrijd_id);
-                stmt.setInt(2, official_id);
+                stmt = this.con.prepareStatement("INSERT INTO wedstrijden (zwembad_id,naam,datum,tijdsregistratie,dagdeel) VALUES (?,?,?,?,?)");
+                stmt.setInt(1, wedstrijd.getZwembad_id());
+                stmt.setString(2, wedstrijd.getNaam());
+                stmt.setString(3, wedstrijd.getDatum().toString());
+                stmt.setString(4, wedstrijd.getTijdsregistratie().toString());
+                stmt.setString(5, wedstrijd.getDagdeel().toString());
                 stmt.executeUpdate();
 
             } catch (SQLException ex) {
@@ -169,10 +140,44 @@ public class DataLayer {
                     stmt.close();
                 }
             }
+        } else throw new IllegalArgumentException("Zwembad bestaad niet");
     }
+
+    public ArrayList<Offiacial> officialLijst(int wedstrijd_id) throws SQLException {
+        ArrayList<Offiacial> officials = new ArrayList<>();
+        Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+        ResultSet rs = stmt.executeQuery("SELECT official_id,functie from jury\n" +
+                "WHERE wedstrijd_id = " + wedstrijd_id + " order by official_id");
+
+        while (rs.next()) {
+            int officialId = rs.getInt("official_id");
+            String functie = rs.getString("functie");
+            Offiacial offiacial = new Offiacial(officialId, Functie.valueOf(functie));
+            officials.add(offiacial);
+        }
+        return officials;
+    }
+
+    public void juryVerwijderen(int wedstrijd_id, int official_id) throws SQLException {
+        PreparedStatement stmt = null;
+        try {
+            stmt = this.con.prepareStatement("DELETE FROM jury WHERE wedstrijd_id=? AND official_id=?");
+            stmt.setInt(1, wedstrijd_id);
+            stmt.setInt(2, official_id);
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+
     public void juryToevoegen(Offiacial official, int wedstrijd_id) throws SQLException {
         PreparedStatement stmt = null;
-        if (samenstellingJury(wedstrijd_id,zwembadIdZoeken(wedstrijd_id),official.getFunctie())) {
+        if (samenstellingJury(wedstrijd_id, zwembadIdZoeken(wedstrijd_id), official.getFunctie())) {
             if (officialCheck(official, wedstrijd_id)) {
                 if (functieUitvoeren(official, diplomaCheck(official))) {
                     try {
@@ -212,7 +217,7 @@ public class DataLayer {
         return -1;
     }
 
-    public boolean functieUitvoeren(Offiacial offiacial, int diploma){
+    public boolean functieUitvoeren(Offiacial offiacial, int diploma) {
         if (offiacial.getFunctie().equals(Functie.KAMPRECHTER) && diploma != 1) return false;
         if (offiacial.getFunctie().equals(Functie.JURYSECRETARIS) && (diploma != 1 && diploma != 2)) return false;
         if (offiacial.getFunctie().equals(Functie.STARTER) && diploma != 3) return false;
@@ -230,15 +235,15 @@ public class DataLayer {
         }
     }
 
-    public boolean samenstellingJury(int wedstrijdId,int zwembad_id,Functie functie) throws SQLException {
+    public boolean samenstellingJury(int wedstrijdId, int zwembad_id, Functie functie) throws SQLException {
         int kamprechter = 0;
         int jurysecr = 0;
         int starter = 0;
         int zwemrechters = 0;
         int tijdopnemer = 0;
         int keerpunt = 0;
-        ArrayList<Offiacial> jury = offiacialLijst(wedstrijdId);
-        for (Offiacial of : jury){
+        ArrayList<Offiacial> jury = officialLijst(wedstrijdId);
+        for (Offiacial of : jury) {
             if (of.getFunctie() == Functie.KAMPRECHTER) kamprechter++;
             if (of.getFunctie() == Functie.JURYSECRETARIS) jurysecr++;
             if (of.getFunctie() == Functie.STARTER) starter++;
@@ -248,20 +253,21 @@ public class DataLayer {
         }
         if (kamprechter < 1 && functie.equals(Functie.KAMPRECHTER)) {
             return true;
-        }else if (jurysecr < 1 && functie.equals(Functie.JURYSECRETARIS)){
+        } else if (jurysecr < 1 && functie.equals(Functie.JURYSECRETARIS)) {
             return true;
-        }else if (starter < 1 && functie.equals(Functie.STARTER)){
+        } else if (starter < 1 && functie.equals(Functie.STARTER)) {
             return true;
-        }else if (zwemrechters < 2 && functie.equals(Functie.ZWEMRECHTER)){
+        } else if (zwemrechters < 2 && functie.equals(Functie.ZWEMRECHTER)) {
             return true;
-        }else if (tijdopnemer < zwembadBanen(zwembad_id) && functie.equals(Functie.TIJDOPNEMER)){
+        } else if (tijdopnemer < zwembadBanen(zwembad_id) && functie.equals(Functie.TIJDOPNEMER)) {
             return true;
-        }else if (keerpunt < zwembadBanen(zwembad_id) && functie.equals(Functie.KEERPUNTRECHTER)){
+        } else if (keerpunt < zwembadBanen(zwembad_id) && functie.equals(Functie.KEERPUNTRECHTER)) {
             return true;
-        }else if (kamprechter == 1 && jurysecr == 1 && starter == 1 && zwemrechters == 2 && tijdopnemer == zwembadBanen(zwembad_id) && keerpunt == zwembadBanen(zwembad_id)){
+        } else if (kamprechter == 1 && jurysecr == 1 && starter == 1 && zwemrechters == 2 && tijdopnemer == zwembadBanen(zwembad_id) && keerpunt == zwembadBanen(zwembad_id)) {
             throw new IllegalArgumentException("Alle functies zijn bezet");
-        }else throw new IllegalArgumentException("Deze functie is al volzet");
+        } else throw new IllegalArgumentException("Deze functie is al volzet");
     }
+
     public int zwembadBanen(int zwembad_id) throws SQLException {
         Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = stmt.executeQuery("SELECT aantal_banen FROM zwembaden WHERE zwembaden.id = " + zwembad_id);
@@ -272,10 +278,10 @@ public class DataLayer {
         return aantalBanen;
     }
 
-    public int zwembadIdZoeken(int wedstrijd_id){
-        String query = "SELECT zwembad_id FROM wedstrijden WHERE id = ?";
+    public int zwembadIdZoeken(int wedstrijd_id) {
         int id = 0;
-        try (PreparedStatement stmt = this.con.prepareStatement(query)) {
+        try {
+            PreparedStatement stmt = this.con.prepareStatement("SELECT zwembad_id FROM wedstrijden WHERE id = ?");
             stmt.setInt(1, wedstrijd_id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -286,4 +292,25 @@ public class DataLayer {
             throw new RuntimeException(e);
         }
     }
+    public void wedstijdprogrammaAanmaken(WedstrijdProgramma wedstrijdProgramma) throws SQLException {
+        PreparedStatement stmt = null;
+
+            try {
+                stmt = this.con.prepareStatement("INSERT INTO wedstrijdprogrammas (wedstrijd_id,programma_id,programmanummer,leeftijdscategorie,aanvangsuur) VALUES (?,?,?,?,?)");
+                stmt.setInt(1, wedstrijdProgramma.getWedstijdId());
+                stmt.setInt(2, wedstrijdProgramma.getProgrammaId());
+                stmt.setInt(3, wedstrijdProgramma.getProgrammanummer());
+                stmt.setString(4, wedstrijdProgramma.getLeeftijdscategorie().toString());
+                stmt.setTime(5, (Time) wedstrijdProgramma.getAanvangsuur());
+                stmt.executeUpdate();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(DataLayer.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            }
+    }
+
 }
