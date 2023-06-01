@@ -1,9 +1,9 @@
 package logica;
 
 public class Jury {
-    private Funtie functie;
+    private Functie functie;
 
-    public Jury(Funtie functie) {
+    public Jury(Functie functie) {
         this.functie = functie;
     }
 }

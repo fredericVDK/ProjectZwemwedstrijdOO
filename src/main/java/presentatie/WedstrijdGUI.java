@@ -36,6 +36,7 @@ public class WedstrijdGUI {
             frame.setContentPane(new MainFormGUI(frame).mainMainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
+            frame.setSize(500,150);
             frame.setVisible(true);
             surroundingFrame.dispose();
         });
@@ -60,6 +61,7 @@ public class WedstrijdGUI {
         frame.setContentPane(new WedstrijdGUI(frame).mainPanelWedstrijd);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setSize(500,400);
         frame.setVisible(true);
     }
 }

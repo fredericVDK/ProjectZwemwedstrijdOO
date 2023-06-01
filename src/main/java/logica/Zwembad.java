@@ -19,7 +19,6 @@ public class Zwembad {
         this.aantalBanen = aantalBanen;
         this.lengte = lengte;
     }
-
     public Zwembad(int id, int adresId, String naam, Aantal_banen aantalBanen, Lengte lengte) {
         this.id = id;
         this.adresId = adresId;
@@ -27,55 +26,15 @@ public class Zwembad {
         this.aantalBanen = aantalBanen;
         this.lengte = lengte;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getAdresId() {
-        return adresId;
-    }
-
-    public void setAdresId(int adresId) {
-        this.adresId = adresId;
-    }
-
     public String getNaam() {
         return naam;
     }
-
-    public void setNaam(String naam) {
-        this.naam = naam;
-    }
-
-    public Adres getAdres() {
-        return adres;
-    }
-
-    public void setAdres(Adres adres) {
-        this.adres = adres;
-    }
-
     public Aantal_banen getAantalBanen() {
         return aantalBanen;
     }
-
-    public void setAantalBanen(Aantal_banen aantalBanen) {
-        this.aantalBanen = aantalBanen;
-    }
-
     public Lengte getLengte() {
         return lengte;
     }
-
-    public void setLengte(Lengte lengte) {
-        this.lengte = lengte;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

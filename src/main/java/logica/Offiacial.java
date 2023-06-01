@@ -1,18 +1,26 @@
 package logica;
 
-public class Offiacial extends Persoon{
+public class Offiacial{
 
+    private  int officalId;
+    private Functie functie;
     private boolean kamprechter = false;
     private boolean jurysecretaris = false;
     private boolean starter = false;
     private boolean tak = false;
 
-    public Offiacial(String naam, String voornaam, Adres adres, int geboortejaar, char geslacht, String licentienummer, String club, boolean kamprechter, boolean jurysecretaris, boolean starter, boolean tak) {
-        super(naam, voornaam, adres, geboortejaar, geslacht, licentienummer, club);
+
+    public Offiacial(int officalId, boolean kamprechter, boolean jurysecretaris, boolean starter, boolean tak) {
+        this.officalId = officalId;
         this.kamprechter = kamprechter;
         this.jurysecretaris = jurysecretaris;
         this.starter = starter;
         this.tak = tak;
+    }
+
+    public Offiacial(int officalId, Functie functie) {
+        this.officalId = officalId;
+        this.functie = functie;
     }
 
     public boolean isKamprechter() {
@@ -43,7 +51,21 @@ public class Offiacial extends Persoon{
         return tak;
     }
 
+    public int getOfficalId() {
+        return officalId;
+    }
+
+    public Functie getFunctie() {
+        return functie;
+    }
+
     public void setTak(boolean tak) {
         this.tak = tak;
     }
+
+    @Override
+    public String toString() {
+        return "Official ID : " + officalId + '\t' + '\t' + "Functie : " + functie + '\n' ;
+    }
+
 }

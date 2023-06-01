@@ -1,6 +1,7 @@
 package logica;
 
 public class Persoon {
+    private int officialId;
     private String naam;
     private String voornaam;
     private Adres adres;
@@ -17,6 +18,17 @@ public class Persoon {
         this.geslacht = geslacht;
         this.licentienummer = licentienummer;
         this.club = club;
+    }
+
+    public Persoon(int officialId, String naam, String voornaam) {
+        this.officialId = officialId;
+        this.naam = naam;
+        this.voornaam = voornaam;
+    }
+
+    @Override
+    public String toString() {
+        return "officialId : " + officialId + ", naam : '" + naam +  ", voornaam : " + voornaam  ;
     }
 
     public String getNaam() {
