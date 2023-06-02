@@ -42,12 +42,4 @@ public class WedstrijdProgramma{
     public Date getAanvangsuur() {
         return aanvangsuur;
     }
-
-    public ArrayList<Serie> getSeries() {
-        return series;
-    }
-
-    public ArrayList<Programma> getProgrammas() {
-        return programmas;
-    }
 }
