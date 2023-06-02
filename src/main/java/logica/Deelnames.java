@@ -3,16 +3,30 @@ package logica;
 import java.sql.Time;
 
 public class Deelnames {
+    private int zwemmerId;
+    private int serieId;
     private int baan;
-    private Time resultaat;
-    private String uitsluitingscode;
-    private boolean forfait;
 
-    public Deelnames(int baan, Time resultaat, String uitsluitingscode, boolean forfait) {
+    public Deelnames(int zwemmerId, int serieId, int baan) {
+        this.zwemmerId = zwemmerId;
+        this.serieId = serieId;
         this.baan = baan;
-        this.resultaat = resultaat;
-        this.uitsluitingscode = uitsluitingscode;
-        this.forfait = forfait;
+    }
+
+    public int getZwemmerId() {
+        return zwemmerId;
+    }
+
+    public void setZwemmerId(int zwemmerId) {
+        this.zwemmerId = zwemmerId;
+    }
+
+    public int getSerieId() {
+        return serieId;
+    }
+
+    public void setSerieId(int serieId) {
+        this.serieId = serieId;
     }
 
     public int getBaan() {
@@ -21,29 +35,5 @@ public class Deelnames {
 
     public void setBaan(int baan) {
         this.baan = baan;
-    }
-
-    public Time getResultaat() {
-        return resultaat;
-    }
-
-    public void setResultaat(Time resultaat) {
-        this.resultaat = resultaat;
-    }
-
-    public String getUitsluitingscode() {
-        return uitsluitingscode;
-    }
-
-    public void setUitsluitingscode(String uitsluitingscode) {
-        this.uitsluitingscode = uitsluitingscode;
-    }
-
-    public boolean isForfait() {
-        return forfait;
-    }
-
-    public void setForfait(boolean forfait) {
-        this.forfait = forfait;
     }
 }

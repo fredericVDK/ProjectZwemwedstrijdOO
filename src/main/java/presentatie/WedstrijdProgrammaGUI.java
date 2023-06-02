@@ -30,6 +30,7 @@ public class WedstrijdProgrammaGUI {
     private JComboBox comboBoxGeslacht;
 
     public WedstrijdProgrammaGUI(JFrame surroundingFrame) {
+        DataLayer datalaag = new DataLayer();
         for (Leeftijd leeftijd : Leeftijd.values()){
             comboBoxLeeftijd.addItem(leeftijd);
         }
@@ -46,7 +47,7 @@ public class WedstrijdProgrammaGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 lblErrorMessage.setText("");
-                DataLayer datalaag = new DataLayer();
+
                 int wedstijdId = Integer.parseInt(textFieldwedstijdId.getText());
                 int programmaId = Integer.parseInt(textFieldProgrammaId.getText());
                 int programmaNr = Integer.parseInt(textFieldProgrammaNr.getText());

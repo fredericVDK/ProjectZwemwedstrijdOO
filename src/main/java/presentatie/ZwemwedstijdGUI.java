@@ -23,6 +23,7 @@ public class ZwemwedstijdGUI {
     private JLabel lblNaam;
 
     public ZwemwedstijdGUI(JFrame surroundingFrame) {
+        DataLayer datalaag = new DataLayer();
         for (Aantal_banen aantalBanen : Aantal_banen.values()) {
             comboBoxAantalBanen.addItem(aantalBanen.toString().replace("_",""));
         }
@@ -39,7 +40,6 @@ public class ZwemwedstijdGUI {
                 try{
                      Adres adres = new Adres(textFieldStraat.getText(),textFieldNummer.getText(),textFieldGemeente.getText(),Integer.parseInt(textFieldPostcode.getText()));
                      Zwembad zwembad = ZwembadAanmaken(textFieldNaam.getText(),adres,aantal,lengte);
-                     DataLayer datalaag = new DataLayer();
 
                      datalaag.adresToevoegen(adres);
                      datalaag.zwembadToevoegen(zwembad,datalaag.adresChecker(adres));
@@ -48,7 +48,6 @@ public class ZwemwedstijdGUI {
                 }catch (Exception exception){
                     labelZwembadToevogen.setText(exception.getMessage());
                 }
-
             }
         });
         terugButton.addActionListener(e ->  {
@@ -62,12 +61,10 @@ public class ZwemwedstijdGUI {
         });
     }
 
-
     public Zwembad ZwembadAanmaken(String naam, Adres adres , Aantal_banen aantalBanen, Lengte lengte ){
         Zwembad zwembad = new Zwembad(naam,adres,aantalBanen,lengte);
         return zwembad;
     }
-
     public static void main(String[] args) {
         JFrame frame = new JFrame("ZwemwedstijdGUI");
         frame.setContentPane(new ZwemwedstijdGUI(frame).mainPanel);

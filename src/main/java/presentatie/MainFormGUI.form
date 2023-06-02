@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="presentatie.MainFormGUI">
-  <grid id="27dc6" binding="mainMainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="mainMainPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
       <xy x="20" y="20" width="513" height="391"/>
     </constraints>
@@ -40,20 +40,28 @@
           <text value="Wedstrijd Programma aanmaken"/>
         </properties>
       </component>
-      <component id="c448c" class="javax.swing.JButton" binding="button5" default-binding="true">
+      <component id="c448c" class="javax.swing.JButton" binding="serieAanmakenButton" default-binding="true">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="Serie aanmaken"/>
         </properties>
       </component>
-      <component id="b06" class="javax.swing.JButton" binding="button6" default-binding="true">
+      <component id="b06" class="javax.swing.JButton" binding="zwemmerToevoegenAanSerieButton" default-binding="true">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="Zwemmer toevoegen aan serie"/>
+        </properties>
+      </component>
+      <component id="95e55" class="javax.swing.JButton" binding="overzichtPaginaButton" default-binding="true">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Overzicht pagina"/>
         </properties>
       </component>
     </children>

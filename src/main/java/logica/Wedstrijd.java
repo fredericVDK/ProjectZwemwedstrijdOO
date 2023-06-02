@@ -3,6 +3,7 @@ package logica;
 import java.util.Date;
 
 public class Wedstrijd {
+    private int id;
     private int zwembad_id;
     private String naam;
     private Tijdsregistratie tijdsregistratie;
@@ -26,6 +27,12 @@ public class Wedstrijd {
         this.dagdeel = dagdeel;
         this.datum = datum;
     }
+
+    public Wedstrijd(int id, String naam) {
+        this.id = id;
+        this.naam = naam;
+    }
+
     public String getNaam() {
         return naam;
     }
@@ -43,5 +50,10 @@ public class Wedstrijd {
     }
     public void setZwembad_id(int zwembad_id) {
         this.zwembad_id = zwembad_id;
+    }
+
+    @Override
+    public String toString() {
+        return id + ". " + naam ;
     }
 }

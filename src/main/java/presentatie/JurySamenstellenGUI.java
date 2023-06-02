@@ -43,13 +43,13 @@ public class JurySamenstellenGUI {
     }
 
     public JurySamenstellenGUI(JFrame surroundingFrame) {
+        DataLayer datalaag = new DataLayer();
         for (Functie fun : Functie.values()) {
             comboBoxFunctie.addItem(fun);
         }
         selectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DataLayer datalaag = new DataLayer();
                 try {
                     textAreaJuryLijst.setText("");
                     ArrayList<Offiacial> lijst = datalaag.officialLijst(Integer.parseInt(textFieldWedstrijd_id.getText()));
@@ -64,7 +64,6 @@ public class JurySamenstellenGUI {
         buttonToevoegen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DataLayer datalaag = new DataLayer();
                 int official_id = Integer.parseInt(textFieldOfficial_id.getText());
                 Functie functie = Functie.valueOf(comboBoxFunctie.getSelectedItem().toString());
                 try {
@@ -84,7 +83,6 @@ public class JurySamenstellenGUI {
         juryVerwijderenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DataLayer datalaag = new DataLayer();
                 try {
                     datalaag.juryVerwijderen(Integer.parseInt(textFieldWedstrijd_id.getText()), Integer.parseInt(textFieldOfficial_id.getText()));
                     lblErrorMessage.setText("Jury verwijderd");

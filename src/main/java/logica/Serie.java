@@ -3,22 +3,22 @@ package logica;
 import java.sql.Time;
 
 public class Serie {
-    private int reeksnummer;
+    private int wedstijdprogrammaId;
+
     private Time aanvangsuur;
 
-    public Serie(int reeksnummer, Time aanvangsuur) {
-        this.reeksnummer = reeksnummer;
+    public Serie(int wedstijdprogrammaId, Time aanvangsuur) {
+        this.wedstijdprogrammaId = wedstijdprogrammaId;
         this.aanvangsuur = aanvangsuur;
     }
 
-    public int getReeksnummer() {
-        return reeksnummer;
+    public int getWedstijdprogrammaId() {
+        return wedstijdprogrammaId;
     }
 
-    public void setReeksnummer(int reeksnummer) {
-        this.reeksnummer = reeksnummer;
+    public void setWedstijdprogrammaId(int wedstijdprogrammaId) {
+        this.wedstijdprogrammaId = wedstijdprogrammaId;
     }
-
     public Time getAanvangsuur() {
         return aanvangsuur;
     }

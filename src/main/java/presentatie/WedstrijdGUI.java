@@ -24,6 +24,7 @@ public class WedstrijdGUI {
 
 
     public WedstrijdGUI(JFrame surroundingFrame) {
+        DataLayer datalaag  = new DataLayer();
         for (Dagdeel dagdeel:Dagdeel.values()){
             comboBoxDagdeel.addItem(dagdeel);
         }
@@ -43,7 +44,7 @@ public class WedstrijdGUI {
         wedstrijdToevoegenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DataLayer datalaag  = new DataLayer();
+
                 try {
                     Wedstrijd wedstrijd = new Wedstrijd(datalaag.zwembadIdChecker(Integer.parseInt(textFieldZwembadId.getText())),textFieldNaam.getText(), Tijdsregistratie.valueOf(comboBoxTijdsregistratie.getSelectedItem().toString()),
                             Dagdeel.valueOf(comboBoxDagdeel.getSelectedItem().toString()), Date.valueOf(textFieldDatum.getText().toString()));
