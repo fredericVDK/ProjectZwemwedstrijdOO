@@ -118,6 +118,35 @@ public class DataLayer {
         }
         return -1;
     }
+    public ArrayList<Zwembad> zwembadLijst() {
+        ArrayList<Zwembad> zwembaden = new ArrayList<Zwembad>();
+        String query = "SELECT id,naam from zwembaden";
+        try (PreparedStatement stmt = this.con.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String naam = rs.getString("naam");
+                Zwembad zwembad = new Zwembad(id,naam);
+                zwembaden.add(zwembad);
+            }
+            return zwembaden;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+//    public ArrayList<Wedstrijd> wedstrijdenLijst() throws SQLException {
+//        ArrayList<Wedstrijd> wedstrijden = new ArrayList<Wedstrijd>();
+//
+//        Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+//        ResultSet rs = stmt.executeQuery("select id,naam from wedstrijden");
+//        while (rs.next()) {
+//            int id = rs.getInt("id");
+//            String naam = rs.getString("naam");
+//            Wedstrijd wedstrijd = new Wedstrijd(id,naam);
+//            wedstrijden.add(wedstrijd);
+//        }
+//        return wedstrijden;
+//    }
 
     public void wedstrijdToevoegen(Wedstrijd wedstrijd) throws SQLException {
         PreparedStatement stmt = null;
@@ -326,7 +355,69 @@ public class DataLayer {
         }
         return aantal;
     }
+    public ArrayList<WedstrijdProgramma> wedstrijdProgrammaLijst(int wedstrijdId) {
+        ArrayList<WedstrijdProgramma> progLijst = new ArrayList<WedstrijdProgramma>();
+        try {
+            PreparedStatement stmt = this.con.prepareStatement("SELECT * FROM zwemwedstrijden.wedstrijdprogrammas where wedstrijd_id = ?; ");
+            stmt.setInt(1,wedstrijdId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int wedstrijd_id = rs.getInt("wedstrijd_id");
+                int programmaid = rs.getInt("programma_id");
+                int programmaNr = rs.getInt("programmanummer");
+                String leeftijd = rs.getString("leeftijdscategorie");
+                String tijd = rs.getString("aanvangsuur");
+                WedstrijdProgramma wedstrijdProgramma = new WedstrijdProgramma(id,wedstrijdId,programmaid,programmaNr,Leeftijd.valueOfLabel(leeftijd),Time.valueOf(tijd));
+                progLijst.add(wedstrijdProgramma);
+            }
+            return progLijst;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ArrayList<Serie> serieLijst(int wedstrijdProg) {
+        ArrayList<Serie> serieLijst = new ArrayList<Serie>();
+        try {
+            PreparedStatement stmt = this.con.prepareStatement("SELECT * FROM series where wedstrijdprogramma_id = ?; ");
+            stmt.setInt(1,wedstrijdProg);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int wedstrijdProg_id = rs.getInt("wedstrijdprogramma_id");
+                int reeksnummer = rs.getInt("reeksnummer");
+                String tijd = rs.getString("aanvangsuur");
+                Serie serie = new Serie(id,wedstrijdProg_id,reeksnummer,Time.valueOf(tijd));
+                serieLijst.add(serie);
+            }
+            return serieLijst;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public ArrayList<Zwemmer> zwemmerLijst(int serieId) {
+        ArrayList<Zwemmer> zwemmersLijst = new ArrayList<Zwemmer>();
+        try {
+            PreparedStatement stmt = this.con.prepareStatement("select naam,voornaam,besttijden.besttijd from personen\n" +
+                    "inner join deelnames on deelnames.zwemmer_id = personen.id\n" +
+                    "inner join series on series.id = deelnames.serie_id\n" +
+                    "inner join besttijden on besttijden.zwemmer_id = personen.id\n" +
+                    "where serie_id = ?; ");
+            stmt.setInt(1,serieId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+               String naam = rs.getString("naam");
+               String voornaam = rs.getString("voornaam");
+                String besttijd = rs.getString("besttijd");
+                Zwemmer zwemmer = new Zwemmer(naam,voornaam,besttijd);
+                zwemmersLijst.add(zwemmer);
+            }
+            return zwemmersLijst;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public boolean wedstijdChecker(WedstrijdProgramma wedstrijdProgramma) throws SQLException {
         String query = "SELECT id FROM wedstrijden WHERE wedstrijden.id = ?";
         try (PreparedStatement stmt = this.con.prepareStatement(query)) {
@@ -463,15 +554,6 @@ public class DataLayer {
             wedstrijdLijst.add(wedstrijd);
         }
         return wedstrijdLijst;
-    }
-    public String zwembadam(int wedstrijdId) throws SQLException {
-        Statement stmt = this.con.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-        ResultSet rs = stmt.executeQuery("SELECT zwembaden.naam from zwembaden where zwembaden.id in (select wedstrijden.zwembad_id from wedstrijden where wedstrijden.id = ?)");
-        int aantalBanen = 0;
-        while (rs.next()) {
-            aantalBanen = rs.getInt("aantal_banen");
-        }
-        return "aantalBanen";
     }
     public String zwembadNaam(int wedstrijdID) {
         String query = "SELECT zwembaden.naam from zwembaden where zwembaden.id in (select wedstrijden.zwembad_id from wedstrijden where wedstrijden.id = ?)";

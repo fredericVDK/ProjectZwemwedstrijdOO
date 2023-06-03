@@ -12,7 +12,6 @@ import logica.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.sql.Time;
 
 public class WedstrijdProgrammaGUI {
@@ -25,6 +24,7 @@ public class WedstrijdProgrammaGUI {
     private JButton terugButton;
     private JButton aanmakenButton;
     private JLabel lblErrorMessage;
+    private JComboBox comboBoxProgramma;
     private JComboBox comboBoxSlag;
     private JComboBox comboBoxAfstand;
     private JComboBox comboBoxGeslacht;
@@ -34,12 +34,13 @@ public class WedstrijdProgrammaGUI {
         for (Leeftijd leeftijd : Leeftijd.values()){
             comboBoxLeeftijd.addItem(leeftijd);
         }
+
         terugButton.addActionListener(e -> {
             JFrame frame = new JFrame("MainForm");
             frame.setContentPane(new MainFormGUI(frame).mainMainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
-            frame.setSize(500,150);
+            frame.setSize(500, 200);
             frame.setVisible(true);
             surroundingFrame.dispose();
         });

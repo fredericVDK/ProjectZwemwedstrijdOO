@@ -80,6 +80,7 @@ public class MainFormGUI {
             }
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
+            frame.setSize(650,1250);
             frame.setVisible(true);
             surroundingFrame.dispose();
         });
@@ -90,7 +91,7 @@ public class MainFormGUI {
         frame.setContentPane(new MainFormGUI(frame).mainMainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(500, 150);
+        frame.setSize(500, 200);
         frame.setVisible(true);
     }
 }

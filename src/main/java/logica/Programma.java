@@ -13,35 +13,8 @@ public class Programma {
         this.geslacht = geslacht;
     }
 
-    public Slag getSlag() {
-        return slag;
-    }
-
-    public void setSlag(Slag slag) {
-        this.slag = slag;
-    }
-
-    public Afstand getAfstand() {
-        return afstand;
-    }
-
-    public void setAfstand(Afstand afstand) {
-        this.afstand = afstand;
-    }
-
-    public boolean isAflossing() {
-        return aflossing;
-    }
-
-    public void setAflossing(boolean aflossing) {
-        this.aflossing = aflossing;
-    }
-
-    public Geslacht getGeslacht() {
-        return geslacht;
-    }
-
-    public void setGeslacht(Geslacht geslacht) {
-        this.geslacht = geslacht;
+    @Override
+    public String toString() {
+        return afstand.toString().replace("_","") + "m " + slag + " slag " + geslacht + " " + "Aflossing: " + aflossing;
     }
 }

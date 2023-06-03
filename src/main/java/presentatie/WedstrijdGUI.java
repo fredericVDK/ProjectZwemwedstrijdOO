@@ -4,12 +4,12 @@ import datalaag.DataLayer;
 import logica.Dagdeel;
 import logica.Tijdsregistratie;
 import logica.Wedstrijd;
+import logica.Zwembad;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.sql.SQLException;
 
 public class WedstrijdGUI {
     private JTextField textFieldZwembadId;
@@ -21,6 +21,7 @@ public class WedstrijdGUI {
     private JButton wedstrijdToevoegenButton;
     private JLabel lblErrorMessage;
     private JTextField textFieldDatum;
+    private JComboBox comboBoxZwembadId;
 
 
     public WedstrijdGUI(JFrame surroundingFrame) {
@@ -31,13 +32,15 @@ public class WedstrijdGUI {
         for (Tijdsregistratie tijdReg:Tijdsregistratie.values()){
             comboBoxTijdsregistratie.addItem(tijdReg);
         }
-
+        for (Zwembad zwembad : datalaag.zwembadLijst()){
+            comboBoxZwembadId.addItem(zwembad);
+        }
         terugButton.addActionListener(e ->  {
             JFrame frame = new JFrame("MainForm");
             frame.setContentPane(new MainFormGUI(frame).mainMainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
-            frame.setSize(500,150);
+            frame.setSize(500, 200);
             frame.setVisible(true);
             surroundingFrame.dispose();
         });
@@ -46,7 +49,7 @@ public class WedstrijdGUI {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    Wedstrijd wedstrijd = new Wedstrijd(datalaag.zwembadIdChecker(Integer.parseInt(textFieldZwembadId.getText())),textFieldNaam.getText(), Tijdsregistratie.valueOf(comboBoxTijdsregistratie.getSelectedItem().toString()),
+                    Wedstrijd wedstrijd = new Wedstrijd(datalaag.zwembadIdChecker(comboBoxZwembadId.getSelectedIndex()+1),textFieldNaam.getText(), Tijdsregistratie.valueOf(comboBoxTijdsregistratie.getSelectedItem().toString()),
                             Dagdeel.valueOf(comboBoxDagdeel.getSelectedItem().toString()), Date.valueOf(textFieldDatum.getText().toString()));
                     lblErrorMessage.setText("Wedstrijd toegevoegd");
                     datalaag.wedstrijdToevoegen(wedstrijd);

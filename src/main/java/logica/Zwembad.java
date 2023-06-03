@@ -26,6 +26,12 @@ public class Zwembad {
         this.aantalBanen = aantalBanen;
         this.lengte = lengte;
     }
+
+    public Zwembad(int id, String naam) {
+        this.id = id;
+        this.naam = naam;
+    }
+
     public String getNaam() {
         return naam;
     }
@@ -41,5 +47,10 @@ public class Zwembad {
         if (o == null || getClass() != o.getClass()) return false;
         Zwembad zwembad = (Zwembad) o;
         return id == zwembad.id && adresId == zwembad.adresId && Objects.equals(naam, zwembad.naam) && Objects.equals(adres, zwembad.adres) && aantalBanen == zwembad.aantalBanen && lengte == zwembad.lengte;
+    }
+
+    @Override
+    public String toString() {
+        return id + ". " + naam;
     }
 }

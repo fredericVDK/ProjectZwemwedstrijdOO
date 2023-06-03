@@ -7,8 +7,7 @@
 package presentatie;
 
 import datalaag.DataLayer;
-import logica.Offiacial;
-import logica.Wedstrijd;
+import logica.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,17 +21,18 @@ public class overzichtPaginaGUI {
     private JTextArea textAreaLijst;
     private JComboBox comboBoxWedstrijd;
     private JComboBox comboBoxKeuze;
+    private JComboBox comboBoxProgramma;
+    private JComboBox comboBoxSerie;
 
 
     public overzichtPaginaGUI(JFrame surroundingFrame) throws SQLException {
         DataLayer datalaag = new DataLayer();
-        String [] keuze = {"Zwembad","Wedstrijd","Jurysamenstelling","Programma","Serie","Zwemmers"};
+        String [] keuze = {"Zwembad","Wedstrijd","Jurysamenstelling","Zwemmers"};
         for (String keus:keuze){
             comboBoxKeuze.addItem(keus);
         }
-
         for (Wedstrijd wed : datalaag.wedstrijdLijst()){
-            comboBoxWedstrijd.addItem(wed);
+            comboBoxWedstrijd.addItem(wed.toString());
         }
 
 
@@ -41,7 +41,7 @@ public class overzichtPaginaGUI {
             frame.setContentPane(new MainFormGUI(frame).mainMainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
-            frame.setSize(500, 150);
+            frame.setSize(500, 200);
             frame.setVisible(true);
             surroundingFrame.dispose();
         });
@@ -55,6 +55,7 @@ public class overzichtPaginaGUI {
                     textAreaLijst.setText(datalaag.wedNaam(comboBoxWedstrijd.getSelectedIndex()+1));
                 }
                 if (comboBoxKeuze.getSelectedItem().toString().equals("Jurysamenstelling")){
+                    textAreaLijst.setText("");
                     ArrayList<Offiacial> lijst = null;
                     try {
                         lijst = datalaag.officialLijst(comboBoxWedstrijd.getSelectedIndex()+1);
@@ -65,8 +66,31 @@ public class overzichtPaginaGUI {
                         throw new RuntimeException(ex);
                     }
                 }
-                if (comboBoxKeuze.getSelectedItem().toString().equals("Programma")){
-
+                if (comboBoxKeuze.getSelectedItem().toString().equals("Zwemmers")){
+                    textAreaLijst.setText("");
+                    ArrayList<Zwemmer> lijst = null;
+                    lijst = datalaag.zwemmerLijst(Integer.parseInt(comboBoxSerie.getSelectedItem().toString().substring(0,3).replace(".","")));
+                    for (Zwemmer a : lijst) {
+                        textAreaLijst.append(a.toString());
+                    }
+                }
+            }
+        });
+        comboBoxWedstrijd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                comboBoxProgramma.removeAllItems();
+                for (WedstrijdProgramma prog : datalaag.wedstrijdProgrammaLijst(comboBoxWedstrijd.getSelectedIndex()+1)){
+                    comboBoxProgramma.addItem(prog);
+                    System.out.println(comboBoxWedstrijd.getSelectedIndex()+1);                }
+            }
+        });
+        comboBoxProgramma.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                comboBoxSerie.removeAllItems();
+                for (Serie serie : datalaag.serieLijst(Integer.parseInt(comboBoxProgramma.getSelectedItem().toString().substring(0,2).replace(".","")))){
+                    comboBoxSerie.addItem(serie);
                 }
             }
         });
@@ -76,6 +100,7 @@ public class overzichtPaginaGUI {
         frame.setContentPane(new overzichtPaginaGUI(frame).mainPanelOverzichtPagina);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setSize(650,1250);
         frame.setVisible(true);
     }
 }

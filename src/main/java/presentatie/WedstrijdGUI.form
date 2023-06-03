@@ -13,7 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Zwembad Id"/>
+          <text value="Zwembad"/>
         </properties>
       </component>
       <component id="2be68" class="javax.swing.JLabel">
@@ -29,7 +29,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Datum (BV:17-05-2023):"/>
+          <text value="Datum (BV:2023-05-17):"/>
         </properties>
       </component>
       <component id="17f3c" class="javax.swing.JLabel">
@@ -46,16 +46,6 @@
         </constraints>
         <properties>
           <text value="Dagdeel"/>
-        </properties>
-      </component>
-      <component id="12647" class="javax.swing.JTextField" binding="textFieldZwembadId">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <text value=""/>
         </properties>
       </component>
       <component id="10663" class="javax.swing.JTextField" binding="textFieldNaam">
@@ -114,6 +104,14 @@
         </constraints>
         <properties>
           <text value=""/>
+        </properties>
+      </component>
+      <component id="cbc3c" class="javax.swing.JComboBox" binding="comboBoxZwembadId">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model/>
         </properties>
       </component>
     </children>

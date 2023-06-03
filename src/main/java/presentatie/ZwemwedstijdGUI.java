@@ -31,6 +31,7 @@ public class ZwemwedstijdGUI {
             comboBoxLengte.addItem(lengte.toString().replace("_",""));
         }
 
+
         toevoegenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,7 +56,7 @@ public class ZwemwedstijdGUI {
             frame.setContentPane(new MainFormGUI(frame).mainMainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
-            frame.setSize(500,150);
+            frame.setSize(500, 200);
             frame.setVisible(true);
             surroundingFrame.dispose();
         });

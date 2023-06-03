@@ -30,7 +30,7 @@ public class ZwemmerToevoegenGUI {
             frame.setContentPane(new MainFormGUI(frame).mainMainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
-            frame.setSize(500, 150);
+            frame.setSize(500, 200);
             frame.setVisible(true);
             surroundingFrame.dispose();
         });
@@ -43,6 +43,7 @@ public class ZwemmerToevoegenGUI {
                 Deelnames deelnames = new Deelnames(zwemmerID,serieID,baan);
                 try {
                     datalaag.deelnameAanmaken(deelnames);
+                    lblErrorMessage.setText("Zwemmer toegevoegd");
                 } catch (Exception ex) {
                     lblErrorMessage.setText(ex.getMessage());
                 }

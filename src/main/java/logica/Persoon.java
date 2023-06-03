@@ -26,6 +26,11 @@ public class Persoon {
         this.voornaam = voornaam;
     }
 
+    public Persoon(String naam, String voornaam) {
+        this.naam = naam;
+        this.voornaam = voornaam;
+    }
+
     @Override
     public String toString() {
         return "officialId : " + officialId + ", naam : '" + naam +  ", voornaam : " + voornaam  ;

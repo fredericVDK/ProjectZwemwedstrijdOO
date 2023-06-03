@@ -33,6 +33,7 @@ public class SerieGUI {
                 Serie serie = new Serie(wedstijdProgId,aanvangsuur);
                 try {
                     datalaag.serieAanmaken(serie);
+                    lblErrorMessage.setText("Serie toegevoegd");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -44,7 +45,7 @@ public class SerieGUI {
             frame.setContentPane(new MainFormGUI(frame).mainMainPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
-            frame.setSize(500,150);
+            frame.setSize(500, 200);
             frame.setVisible(true);
             surroundingFrame.dispose();
         });
